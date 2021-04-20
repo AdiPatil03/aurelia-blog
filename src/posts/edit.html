@@ -1,0 +1,10 @@
+<template>
+  <require from="../resources/elements/post-form"></require>
+
+  <post-form 
+    title.bind="title"
+    error.bind="error"
+    post.bind="post"
+    submit.delegate="updatePost()">
+  </post-form>
+</template>

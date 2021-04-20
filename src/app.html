@@ -1,0 +1,73 @@
+<template>
+  <require from="bootstrap/dist/css/bootstrap.css"></require>
+  <require from="./assets/styles/blog.css"></require>
+  <require from="./posts/archive-view"></require>
+  <require from="./posts/tag-view"></require>
+  <require from="./posts/create"></require>
+  <require from="./posts/index"></require>
+  <require from="./posts/view"></require>
+  <require from="./posts/edit"></require>
+  <require from="./auth/signup"></require>
+  <require from="./auth/login"></require>
+
+  <div class="container custom-header">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link ${router.currentInstruction.config.name === 'home' ? 'active' : ''}" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link  ${router.currentInstruction.config.name === 'login' ? 'active' : ''}" route-href="route: login" if.bind="!currentUser">Log In</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link ${router.currentInstruction.config.name === 'signup' ? 'active' : ''}" route-href="route: signup" if.bind="!currentUser">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link ${router.currentInstruction.config.name === 'new-post' ? 'active' : ''}" route-href="route: create-post" if.bind="currentUser">New Post</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link ${router.currentInstruction.config.name === 'logout' ? 'active' : ''}" href="#" if.bind="currentUser" click.delegate="logout()">Log Out</a>
+      </li>
+    </ul>
+  </div>
+  
+  <main class="container">
+    <div class="row mb-2">
+      <h3 class="pb-3 mb-4 font-italic border-bottom custom-title">
+        Bootstrap Blog Example
+      </h3>
+    </div>
+    <div class="row">
+      <div class="col-md-8">  
+        <router-view></router-view>  
+      </div>
+  
+      <div class="col-md-4">
+        <span>Welcome, ${currentUser || 'Guest'}</span>
+        <div class="p-4 mb-3 bg-light rounded">
+          <h4 class="fst-italic">Tags</h4>
+          <a class="text-decoration-none" repeat.for="tag of tags" route-href="route: tag-view; params.bind: {tag: tag}">
+            <span class="badge bg-secondary">${tag}</span>
+          </a>
+        </div>
+  
+        <div class="p-4">
+          <h4 class="fst-italic">Archives</h4>
+          <ol class="list-unstyled mb-0">
+            <li repeat.for="archive of archives">
+              <a class="text-decoration-none" route-href="route: archive-view; params.bind: {archive: archive}">${archive}</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+  
+    </div><!-- /.row -->
+  
+  </main><!-- /.container -->
+  
+  <footer class="blog-footer custom-footer">
+    <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+    <p>
+      <a href="#">Back to top</a>
+    </p>
+  </footer>
+</template>

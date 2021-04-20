@@ -1,0 +1,31 @@
+<template>
+
+  <h1>${title}</h1>
+  <form submit.call="submit()">
+    <div class="mb-3">
+      <input type="text" class="form-control" value.bind="post.title & validateOnChange" placeholder="Your Post Title">
+    </div>
+    <div class="mb-3">
+      <textarea class="form-control" rows="3" value.bind="post.body & validateOnChange"></textarea>
+    </div>
+    <div class="form-check" repeat.for="tag of allTags">
+      <input class="form-check-input" type="checkbox" value.bind="tag" checked.bind="post.tags">
+      <label class="form-check-label">
+        ${tag}
+      </label>
+    </div>    
+    <div class="row g-3">
+      <div class="col-auto">
+        <input type="text" class="form-control" placeholder="Tag Name" value.bind="newTag">
+      </div>
+      <div class="col-auto">
+        <button click.delegate="addTag()" class="btn add-new-tag mb-3">Add Tag +</button>
+      </div>
+    </div>
+    <hr/>
+    <ul if.bind="controller.errors.length > 0">
+      <li repeat.for="error of controller.errors">${error}</li>
+    </ul>
+    <button type="submit" class="btn btn-sm btn-primary" disabled.bind="controller.errors.length > 0">${title}</button>
+  </form>
+</template>
